@@ -1,0 +1,11 @@
+{
+  "name": "skill-cross-risk-guardian",
+  "version": "0.1.0",
+  "description": "Read-only CROSS Mainnet transaction risk preflight skill.",
+  "skills": [
+    {
+      "name": "cross-risk-guardian",
+      "path": "skills/cross-risk-guardian"
+    }
+  ]
+}

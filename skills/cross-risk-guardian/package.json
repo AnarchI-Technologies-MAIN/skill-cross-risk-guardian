@@ -1,0 +1,18 @@
+{
+  "name": "cross-risk-guardian",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Read-only CROSS Mainnet transaction risk preflight driver.",
+  "scripts": {
+    "check": "node --check scripts/_chain.mjs && node --check scripts/_args.mjs && node --check scripts/_json.mjs && node --check scripts/network.mjs && node --check scripts/wallet.mjs && node --check scripts/allowance.mjs && node --check scripts/preflight.mjs",
+    "smoke:read": "node scripts/network.mjs && node scripts/wallet.mjs 0x0000000000000000000000000000000000000000 && node scripts/preflight.mjs 0x0000000000000000000000000000000000000000 --native-spend=0 --min-gas=0 --max-action=1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "viem": "^2.21.0"
+  }
+}
