@@ -1,22 +1,73 @@
-# cross-risk-guardian
+﻿# cross-risk-guardian
 
-Read-only CROSS Mainnet risk preflight skill.
+AnarchI Technologies (TM) CROSS Mainnet transaction risk preflight skill.
 
-Use it before any CROSS skill moves funds. It checks chain id, wallet balance, gas floor, native spend affordability, ERC-20 token balances, specific token allowances, spender allowlists, and max-action caps.
+Hardcoding freedom into the systems of tomorrow.
 
-It never needs a private key.
+## Purpose
 
-## Commands
+Provides a read-only safety layer before any CROSS Mainnet write. It checks chain id, wallet balance, gas floor, native spend affordability, ERC-20 balances, token allowances, spender allowlists, and max action caps.
 
-```bash
-node skills/cross-risk-guardian/scripts/network.mjs
-node skills/cross-risk-guardian/scripts/wallet.mjs 0x0000000000000000000000000000000000000000
-node skills/cross-risk-guardian/scripts/allowance.mjs <token> <owner> <spender>
-node skills/cross-risk-guardian/scripts/preflight.mjs <owner> --native-spend=1 --min-gas=0.05 --max-action=10
-```
+## Use Cases
 
-All commands emit one JSON object.
+- Verify CROSS chain id and wallet balance.
+- Check gas floor and native spend affordability.
+- Check ERC-20 token balance and allowance for a spender.
+- Enforce configured spender allowlists.
+- Block oversized staking, swap, bridge, Forge, game, or treasury actions.
 
-## Limits
+## Setup
 
-Generic EVM chains do not expose a single canonical list of every approval a wallet has ever granted. This skill checks explicit token/spender pairs and documented allowlists. Use an indexer skill or explorer export for historical approval discovery.
+~~~bash
+git clone https://github.com/AnarchI-Technologies/skill-cross-risk-guardian.git
+cd skill-cross-risk-guardian
+./install.sh
+~~~
+
+The installer symlinks skills/cross-risk-guardian into ~/.claude/skills/cross-risk-guardian and installs the package dependencies.
+
+## Common Commands
+
+~~~bash
+cd skills/cross-risk-guardian
+node scripts/network.mjs
+node scripts/wallet.mjs <0xOwner>
+node scripts/allowance.mjs <0xToken> <0xOwner> <0xSpender>
+node scripts/preflight.mjs <0xOwner> --native-spend=1 --min-gas=0.05 --max-action=10
+node scripts/preflight.mjs <0xOwner> --token=<0xToken> --spender=<0xSpender> --token-spend=100 --decimals=18
+~~~
+
+## Configuration
+
+- CROSS_RPC_URL: CROSS Mainnet RPC override.
+- ALLOWED_SPENDERS: comma-separated public spender allowlist.
+- MIN_GAS_NATIVE_CROSS: default gas floor.
+- MAX_ACTION_CROSS: default maximum native action.
+
+## Alternative Configurations
+
+- No allowlist: omit ALLOWED_SPENDERS; the skill warns that spender checks were skipped.
+- Strict allowlist: include only known routers, staking contracts, game contracts, or treasury contracts.
+- Hosted preflight: run before cross-treasury, cross-forge, cross-stake, or game writes.
+- Token-specific checks: pass --decimals when token metadata is unreliable.
+
+## Validation
+
+~~~bash
+npm run check
+npm run smoke:read
+~~~
+
+Run the skill validator after documentation or frontmatter changes:
+
+~~~bash
+python C:\Users\Administrator\.codex\skills\.system\skill-creator\scripts\quick_validate.py C:\Users\Administrator\Desktop\cross-skills\skill-cross-risk-guardian\skills\cross-risk-guardian
+~~~
+
+## Trademark Notice
+
+AnarchI Technologies (TM) and the phrase "Hardcoding freedom into the systems of tomorrow" are used as source-identifying marks of AnarchI Technologies. This project is not an official to-nexus package unless and until the upstream team adopts it.
+
+## License
+
+Apache License 2.0. See LICENSE and NOTICE.md.
