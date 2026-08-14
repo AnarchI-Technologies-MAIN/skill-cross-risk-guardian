@@ -1,4 +1,4 @@
-﻿# cross-risk-guardian
+# cross-risk-guardian
 
 AnarchI Technologies (TM) CROSS Mainnet transaction risk preflight skill.
 
@@ -19,7 +19,7 @@ Provides a read-only safety layer before any CROSS Mainnet write. It checks chai
 ## Setup
 
 ~~~bash
-git clone https://github.com/AnarchI-Technologies/skill-cross-risk-guardian.git
+git clone https://github.com/AnarchI-Technologies-MAIN/skill-cross-risk-guardian.git
 cd skill-cross-risk-guardian
 ./install.sh
 ~~~
